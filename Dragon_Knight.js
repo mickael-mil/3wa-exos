@@ -17,8 +17,8 @@ class Player {
     return this._n
   }
 
-  hit(player) {
-    return getRandomNum(1, player._f)*getRandomNum(1,3)
+  hit() {
+    return getRandomNum(1, this._f)*getRandomNum(1,3)
   }
 
 }
@@ -65,8 +65,10 @@ class Game {
 
     // commencer le premier tour
       // définir qui frappe qui
-      // définir les dégats de l'attaque sur l'autre joueur
-
+      let attackFirst; 
+      getRandomNum(0,1) === true ? attackFirst = "dragon" : "player"
+      // définir les dégats de l'attaque sur l'autre joueur et les enlever aux points du joueur perdant
+      attackFirst === 'dragon' ? p2._l -= p1.hit() : p1._l -= p2.hit()
     // boucler jusqu'à la mort d'un joueur
 
     // annoncer le gagnant
