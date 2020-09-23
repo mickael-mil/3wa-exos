@@ -18,7 +18,7 @@ class Player {
   }
 
   hit() {
-    return getRandomNum(1, this._f)*getRandomNum(1,3)
+    return Math.round(this._f*getRandomNum(10,30))
   }
 
 }
@@ -27,26 +27,20 @@ class Player {
 
 class Dragon extends Player {
 
-  constructor(n) {
-    super(n)
-    this._f = getRandomNum(1,3)*3
-    this._l = getRandomNum(100,500)*5
-    this._n = n;
+  constructor(f, l, n) {
+    super(f, l, n)
+    
   }
 
-  
-  
 }
 
 
 
 class Knight extends Player {
 
-  constructor(n) {
-    super(n)
-    this._f = getRandomNum(1,3)*5
-    this._l = getRandomNum(100,500)*3
-    this._n = n;
+  constructor(f, l, n) {
+    super(f, l, n)
+    
   }
 
 }
@@ -55,8 +49,8 @@ class Knight extends Player {
 class Game {
 
   constructor(p1, p2) {
-    this._p1 = p1;
-    this._p2 = p2;
+    this._p1 = p1; // dragon
+    this._p2 = p2; // knight
   }
 
 
@@ -66,12 +60,24 @@ class Game {
     // commencer le premier tour
       // définir qui frappe qui
       let attackFirst; 
-      getRandomNum(0,1) === true ? attackFirst = "dragon" : "player"
+      getRandomNum(0,1) === 0 ? attackFirst = "dragon" : "player"
       // définir les dégats de l'attaque sur l'autre joueur et les enlever aux points du joueur perdant
       attackFirst === 'dragon' ? p2._l -= p1.hit() : p1._l -= p2.hit()
-    // boucler jusqu'à la mort d'un joueur
 
-    // annoncer le gagnant
+      if (p1._l <= 0 ) {
+        console.log(`Le jeu est terminé, ${p1._n} est mort au combat.`);
+      }
+      else if (p2._l <= 0 ) {
+        console.log(`Le jeu est terminé, ${p2._n} est mort au combat.`)
+      }
+      else {
+        // boucler jusqu'à la mort d'un joueur ou annoncer le gagnant
+        console.log(`Il reste ${p1._l}XP à ${p1._n} et il reste ${p2._l}XP à ${p2._n}`)
+        this.run()
+      }
+    
+
+    
   }
 
 }
@@ -92,7 +98,9 @@ const getRandomNum = (min, max) => {
 // game
 
 
-const p1 = new Dragon('Babar')
-const p2 = new Knight('Julien')
+const p1 = new Dragon(1.4, 300, 'Babar')
+const p2 = new Knight(2.6, 140, 'Julien')
 
-console.log(p1, p2)
+const game = new Game(p1, p2)
+
+console.log(game.run())
