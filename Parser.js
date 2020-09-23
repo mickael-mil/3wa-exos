@@ -2,21 +2,20 @@ const phrase = '8790: bonjour le monde:8987:7777:Hello World:    9007';
 
 class Parser {
 
-    str = "";
 
     constructor(parser) {
         this.parser = parser
-
+        this._str = ""
     }
 
     get str() {
-        return this.str
+        return this._str
     }
     
 
     parse(phrase) {
-        this.str = phrase
-            .split(`${this.parser}`)
+        this._str = phrase
+            .split(this.parser)
             .filter(Number)
             .map(w => w.trim())
             .join(' ')
