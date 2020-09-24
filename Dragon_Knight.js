@@ -23,27 +23,8 @@ class Player {
 
 }
 
-
-
-class Dragon extends Player {
-
-  constructor(f, l, n) {
-    super(f, l, n)
-    
-  }
-
-}
-
-
-
-class Knight extends Player {
-
-  constructor(f, l, n) {
-    super(f, l, n)
-    
-  }
-
-}
+class Dragon extends Player {}
+class Knight extends Player {}
 
 
 class Game {
@@ -55,35 +36,38 @@ class Game {
 
 
   run() {
-    // instancier le jeu
-
-    // commencer le premier tour
-      // définir qui frappe qui
-      let attackFirst; 
-      getRandomNum(0,1) === 0 ? attackFirst = "dragon" : "player"
-      // définir les dégats de l'attaque sur l'autre joueur et les enlever aux points du joueur perdant
-      attackFirst === 'dragon' ? p2._l -= p1.hit() : p1._l -= p2.hit()
-
-      if (p1._l <= 0 ) {
-        console.log(`Le jeu est terminé, ${p1._n} est mort au combat.`);
-      }
-      else if (p2._l <= 0 ) {
-        console.log(`Le jeu est terminé, ${p2._n} est mort au combat.`)
-      }
-      else {
-        // boucler jusqu'à la mort d'un joueur ou annoncer le gagnant
-        console.log(`Il reste ${p1._l}XP à ${p1._n} et il reste ${p2._l}XP à ${p2._n}`)
-        this.run()
-      }
     
+      //instancier le jeu.
 
+      let round = 0;
+
+
+      while (p1._l > 0 && p2._l > 0) {
+        // qui attaque en premier
+        let attackFirst; 
+        
+        Math.random() < .5 ? attackFirst = "dragon" : attackFirst = "player"
+    
+        
+        
+        // définir les dégats de l'attaque sur l'autre joueur et les enlever aux points du joueur perdant
+        attackFirst === 'dragon' ? p2._l -= p1.hit() : p1._l -= p2.hit()
+
+        // Un des deux joueurs est mort après l'attaque ou les deux sont encore en vie
+        if (p1._l <= 0) {
+          console.log(`Il reste 0HP à ${p1._n} et il reste ${p2._l}HP à ${p2._n}. Le combat est terminé et ${p1._n} est mort au combat.`)
+        } else if (p2._l <= 0) {
+          console.log(`Il reste ${p1._l}HP à ${p1._n} et il reste 0HP à ${p2._n}. Le combat est terminé et ${p2._n} est mort au combat.`)
+        } else {
+          console.log(`Il reste ${p1._l}HP à ${p1._n} et il reste ${p2._l}HP à ${p2._n}`)
+        }
+        
+        round++
+      }
     
   }
 
 }
-
-
-
 
 // In Game functions
 
